@@ -1,1 +1,30 @@
-<h1 class="flex text-3xl font-bold">Hello world!</h1>
+<div class="flex flex-col justify-center gap-5">
+  <h1 class="title">Pokemon</h1>
+  <div>
+    <div *ngFor="let pokemon of pokemons" class="pl-2">
+      {{ pokemon.name }}
+    </div>
+  </div>
+  <div class="flex items-center justify-evenly">
+    <!-- PREV -->
+    <button
+      class="button-primary"
+      (click)="onPrev()"
+      [disabled]="!this.prevUrl"
+    >
+      Prev
+    </button>
+
+    <!-- COUNTER -->
+    <div>{{ counter }}</div>
+
+    <!-- NEXT -->
+    <button
+      class="button-primary"
+      (click)="onNext()"
+      [disabled]="!this.nextUrl"
+    >
+      Next
+    </button>
+  </div>
+</div>
