@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ITEM_PER_PAGE } from '../../constants';
 import { Pokemon, PokemonsListPage } from '../data/datamodel';
 import { MultiPokemonService } from '../multi-pokemon.service';
 
@@ -28,35 +27,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     );
   }
 
-  onPrev() {
-    if (!this.pokemonsListPage?.prevUrl) {
-      throw new Error('Button should be disabled');
-    }
-    this.subscribeData(this.pokemonsListPage.prevUrl);
+  onPrev($event: string) {
+    this.subscribeData($event);
   }
 
-  onNext() {
-    if (!this.pokemonsListPage?.nextUrl) {
-      throw new Error('Button should be disabled');
-    }
-    this.subscribeData(this.pokemonsListPage.nextUrl);
-  }
-
-  isPrevDisabled(): boolean {
-    return !this.pokemonsListPage?.prevUrl;
-  }
-
-  isNextDisabled(): boolean {
-    return !this.pokemonsListPage?.nextUrl;
-  }
-
-  getCounter(): number {
-    return this.pokemonsListPage?.indexCounter ?? 1;
-  }
-
-  getMaxCounter(): number {
-    const count:number = this.pokemonsListPage?.count ?? ITEM_PER_PAGE;
-    return Math.ceil(count / ITEM_PER_PAGE);
+  onNext($event: string) {
+    this.subscribeData($event);
   }
 
   getPokemons(): Pokemon[] {

@@ -1,0 +1,23 @@
+<!-- PAGINATION -->
+<div class="mb-8 flex items-center justify-evenly">
+  <!-- PREV -->
+  <button
+    class="button-primary"
+    (click)="onPrev()"
+    [disabled]="isPrevDisabled()"
+  >
+    Prev
+  </button>
+
+  <!-- COUNTER -->
+  <div>Page {{ getCounter() }} of {{ getMaxCounter() }}</div>
+
+  <!-- NEXT -->
+  <button
+    class="button-primary"
+    (click)="onNext()"
+    [disabled]="isNextDisabled()"
+  >
+    Next
+  </button>
+</div>

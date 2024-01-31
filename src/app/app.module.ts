@@ -7,9 +7,10 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { PokemonCardComponent } from './pokemon-card/pokemon-card.component';
 import { GridComponent } from './grid/grid.component';
+import { PaginationComponent } from './pagination/pagination.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, PokemonCardComponent, GridComponent],
+  declarations: [AppComponent, HomeComponent, PokemonCardComponent, GridComponent, PaginationComponent],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],
