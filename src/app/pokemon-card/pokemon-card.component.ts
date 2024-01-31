@@ -6,7 +6,6 @@ import { SinglePokemonService } from '../single-pokemon.service';
 @Component({
   selector: 'app-pokemon-card',
   templateUrl: './pokemon-card.component.html',
-  styleUrl: './pokemon-card.component.css',
 })
 export class PokemonCardComponent {
   @Input() url: string;

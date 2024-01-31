@@ -3,6 +3,7 @@
 // ------------------------
 
 export interface MultiPokemonApiResponse {
+  count: number;
   next: string;
   previous: string;
   results: Pokemon[];
@@ -13,6 +14,7 @@ export interface PokemonsListPage {
   nextUrl: string | null;
   prevUrl: string | null;
   indexCounter: number;
+  count: number;
 }
 
 export interface Pokemon {

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map, tap } from 'rxjs';
+import { ITEM_PER_PAGE } from '../constants';
 import {
   MultiPokemonApiResponse,
   Pokemon,
@@ -27,36 +28,16 @@ export class MultiPokemonService {
       }),
       map((data) => {
         return {
+          count: data.count,
           pokemons: data.results,
           nextUrl: data.next,
           prevUrl: data.previous,
           indexCounter:
-            (parseInt(data.results[0].url.split('/').at(-2)!) - 1) / 20 + 1,
+            (parseInt(data.results[0].url.split('/').at(-2)!) - 1) /
+              ITEM_PER_PAGE +
+            1,
         };
       }),
     );
   }
-  // this.pokemons = apiResponse.pipe(
-  //   map((data) => {
-  //     return data.results;
-  //   }),
-  // );
-  // this.nextUrl = apiResponse.pipe(
-  //   map((data) => {
-  //     return data.next;
-  //   }),
-  // );
-  // this.prevUrl = apiResponse.pipe(
-  //   map((data) => {
-  //     return data.previous;
-  //   }),
-  // );
-  // this.indexCounter = apiResponse.pipe(
-  //   map((data) => {
-  //     const firstElementIndex: string = data.results[0].url
-  //       .split('/')
-  //       .at(-2)!;
-  //     return (parseInt(firstElementIndex) - 1) / 20 + 1;
-  //   }),
-  // );
 }

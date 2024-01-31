@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { ITEM_PER_PAGE } from '../../constants';
 import { Pokemon, PokemonsListPage } from '../data/datamodel';
 import { MultiPokemonService } from '../multi-pokemon.service';
 
@@ -8,7 +9,6 @@ export const DEFAULT_URL: string = 'https://pokeapi.co/api/v2/pokemon/';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css',
 })
 export class HomeComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
@@ -52,6 +52,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   getCounter(): number {
     return this.pokemonsListPage?.indexCounter ?? 1;
+  }
+
+  getMaxCounter(): number {
+    const count:number = this.pokemonsListPage?.count ?? ITEM_PER_PAGE;
+    return Math.ceil(count / ITEM_PER_PAGE);
   }
 
   getPokemons(): Pokemon[] {

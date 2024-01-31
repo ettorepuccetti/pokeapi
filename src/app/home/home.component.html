@@ -1,14 +1,17 @@
 <div class="flex flex-col justify-center gap-5">
   <h1 class="title">Pokemon</h1>
-  <div class="flex justify-center">
-    <div
-      class=":grid-cols-1 grid justify-center gap-4 px-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5"
-    >
-      <div *ngFor="let pokemon of getPokemons()" class="pl-2">
-        <app-pokemon-card [url]="pokemon.url"></app-pokemon-card>
-      </div>
+
+  <!-- SEARCH -->
+  <div class="flex flex-grow justify-center">
+    <div class="flex w-[50vw] justify-center gap-4">
+      <input type="text" class="flex-grow" placeholder="Search Pokemon" />
+      <button class="button-primary">Search</button>
     </div>
   </div>
+
+  <app-grid [pokemons]="getPokemons()" />
+
+  <!-- PAGINATION -->
   <div class="mb-8 flex items-center justify-evenly">
     <!-- PREV -->
     <button
@@ -20,7 +23,7 @@
     </button>
 
     <!-- COUNTER -->
-    <div>{{ getCounter() }}</div>
+    <div>Page {{ getCounter() }} of {{ getMaxCounter() }}</div>
 
     <!-- NEXT -->
     <button
