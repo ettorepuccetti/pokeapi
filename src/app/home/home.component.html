@@ -1,28 +1,32 @@
 <div class="flex flex-col justify-center gap-5">
   <h1 class="title">Pokemon</h1>
-  <div>
-    <div *ngFor="let pokemon of pokemons" class="pl-2">
-      {{ pokemon.name }}
+  <div class="flex justify-center">
+    <div
+      class=":grid-cols-1 grid justify-center gap-4 px-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5"
+    >
+      <div *ngFor="let pokemon of getPokemons()" class="pl-2">
+        <app-pokemon-card [url]="pokemon.url"></app-pokemon-card>
+      </div>
     </div>
   </div>
-  <div class="flex items-center justify-evenly">
+  <div class="mb-8 flex items-center justify-evenly">
     <!-- PREV -->
     <button
       class="button-primary"
       (click)="onPrev()"
-      [disabled]="!this.prevUrl"
+      [disabled]="isPrevDisabled()"
     >
       Prev
     </button>
 
     <!-- COUNTER -->
-    <div>{{ counter }}</div>
+    <div>{{ getCounter() }}</div>
 
     <!-- NEXT -->
     <button
       class="button-primary"
       (click)="onNext()"
-      [disabled]="!this.nextUrl"
+      [disabled]="isNextDisabled()"
     >
       Next
     </button>

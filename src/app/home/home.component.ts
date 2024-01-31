@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { DataService } from '../data.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { Pokemon, PokemonsListPage } from '../data/datamodel';
+import { MultiPokemonService } from '../multi-pokemon.service';
 
 export const DEFAULT_URL: string = 'https://pokeapi.co/api/v2/pokemon/';
 
@@ -8,54 +10,55 @@ export const DEFAULT_URL: string = 'https://pokeapi.co/api/v2/pokemon/';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
-export class HomeComponent {
-  pokemons: Pokemon[] = [];
-  counter: number | null = null;
-  nextUrl: string | null = null;
-  prevUrl: string | null = null;
+export class HomeComponent implements OnInit, OnDestroy {
+  subscriptions: Subscription[] = [];
+  pokemonsListPage: PokemonsListPage | null = null;
 
-  constructor(private dataService: DataService) {}
+  constructor(private dataService: MultiPokemonService) {}
 
   ngOnInit() {
     this.subscribeData(DEFAULT_URL);
   }
 
-  subscribeData(url: string) {
-    this.dataService.setCurrentUrl(url);
-
-    this.dataService.getPokemon().subscribe((data) => {
-      this.pokemons = data;
-    });
-
-    this.dataService.getNextUrl().subscribe((data) => {
-      this.nextUrl = data;
-    });
-
-    this.dataService.getPrevUrl().subscribe((data) => {
-      this.prevUrl = data;
-    });
-
-    this.dataService.getCounter().subscribe((data) => {
-      this.counter = data;
-    });
+  private subscribeData(url: string) {
+    this.subscriptions.push(
+      this.dataService.getMultiplePokemonResponse(url).subscribe((data) => {
+        this.pokemonsListPage = data;
+      }),
+    );
   }
 
   onPrev() {
-    if (!this.prevUrl) {
+    if (!this.pokemonsListPage?.prevUrl) {
       throw new Error('Button should be disabled');
     }
-    this.subscribeData(this.prevUrl);
+    this.subscribeData(this.pokemonsListPage.prevUrl);
   }
 
   onNext() {
-    if (!this.nextUrl) {
+    if (!this.pokemonsListPage?.nextUrl) {
       throw new Error('Button should be disabled');
     }
-    this.subscribeData(this.nextUrl);
+    this.subscribeData(this.pokemonsListPage.nextUrl);
   }
-}
 
-export interface Pokemon {
-  name: string;
-  url: string;
+  isPrevDisabled(): boolean {
+    return !this.pokemonsListPage?.prevUrl;
+  }
+
+  isNextDisabled(): boolean {
+    return !this.pokemonsListPage?.nextUrl;
+  }
+
+  getCounter(): number {
+    return this.pokemonsListPage?.indexCounter ?? 1;
+  }
+
+  getPokemons(): Pokemon[] {
+    return this.pokemonsListPage?.pokemons ?? [];
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+  }
 }
