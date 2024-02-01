@@ -1,0 +1,26 @@
+<div class="flex flex-grow justify-center">
+  <div class="flex w-[50vw] justify-center gap-4">
+    <button
+      class="button-secondary"
+      (click)="onBack()"
+      [hidden]="!isBackButtonVisible()"
+    >
+      Back
+    </button>
+    <input
+      #search
+      type="text"
+      class="flex-grow"
+      placeholder="Search Pokemon"
+      [(ngModel)]="searchValue"
+      (keyup.enter)="onSearch()"
+    />
+    <button
+      class="button-primary"
+      (click)="onSearch()"
+      [disabled]="isSearchDisabled()"
+    >
+      Search
+    </button>
+  </div>
+</div>

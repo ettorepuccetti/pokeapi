@@ -35,6 +35,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.subscribeData($event);
   }
 
+  onSearch($event: PokemonsListPage) {
+    this.pokemonsListPage = $event;
+  }
+
+  onBack() {
+    this.subscribeData(DEFAULT_URL);
+  }
+
   getPokemons(): Pokemon[] {
     return this.pokemonsListPage?.pokemons ?? [];
   }

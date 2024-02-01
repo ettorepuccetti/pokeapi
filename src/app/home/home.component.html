@@ -1,13 +1,13 @@
-<div class="flex flex-col justify-center gap-5">
-  <h1 class="title">Pokemon</h1>
-
-  <!-- SEARCH -->
-  <div class="flex flex-grow justify-center">
-    <div class="flex w-[50vw] justify-center gap-4">
-      <input type="text" class="flex-grow" placeholder="Search Pokemon" />
-      <button class="button-primary">Search</button>
-    </div>
+<div class="flex flex-col justify-center gap-8">
+  <div class="text-center">
+    <img
+      src="assets/pokemon-logo.png"
+      alt="PokeAPI"
+      class="inline-block h-40"
+    />
   </div>
+
+  <app-search (onSearchClick)="onSearch($event)" (onBackClick)="onBack()" />
 
   <app-grid [pokemons]="getPokemons()" />
 
