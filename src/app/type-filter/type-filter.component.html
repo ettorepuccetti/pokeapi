@@ -1,0 +1,8 @@
+<div class="flex items-center gap-2">
+  <label for="type-filter" class=" "> Filter by type: </label>
+  <select #filter [disabled]="disabled" (change)="handleFilterChange(filter.value)">
+    <option *ngFor="let type of types" [ngValue]="type">
+      {{ type }}
+    </option>
+  </select>
+</div>

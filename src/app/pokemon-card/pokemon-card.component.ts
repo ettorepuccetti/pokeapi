@@ -27,4 +27,8 @@ export class PokemonCardComponent {
   ngOnDestroy() {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
+
+  getTypes() {
+    return this.pokemonDetails?.types.join(', ');
+  }
 }

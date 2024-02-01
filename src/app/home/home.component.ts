@@ -12,6 +12,7 @@ export const DEFAULT_URL: string = 'https://pokeapi.co/api/v2/pokemon/';
 export class HomeComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   pokemonsListPage: PokemonsListPage | null = null;
+  disableFilter: boolean = false;
 
   constructor(private dataService: MultiPokemonService) {}
 
@@ -27,20 +28,22 @@ export class HomeComponent implements OnInit, OnDestroy {
     );
   }
 
-  onPrev($event: string) {
-    this.subscribeData($event);
+  onPrev($url: string) {
+    this.subscribeData($url);
   }
 
-  onNext($event: string) {
-    this.subscribeData($event);
+  onNext($url: string) {
+    this.subscribeData($url);
   }
 
   onSearch($event: PokemonsListPage) {
     this.pokemonsListPage = $event;
+    this.disableFilter = true;
   }
 
   onBack() {
     this.subscribeData(DEFAULT_URL);
+    this.disableFilter = false;
   }
 
   getPokemons(): Pokemon[] {
