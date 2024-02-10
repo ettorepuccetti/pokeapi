@@ -22,6 +22,14 @@ export interface Pokemon {
   url: string;
 }
 
+// -------------------
+// -- Type Response --
+// -------------------
+
+export interface TypeApiResponse {
+  pokemon: { pokemon: Pokemon; slot: number }[];
+}
+
 // -------------------------
 // -- Single Pokemon Card --
 // -------------------------

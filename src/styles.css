@@ -22,3 +22,12 @@
     @apply my-8 text-center text-3xl;
   }
 }
+
+body {
+  background-image: url("assets/sprite.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-color: rgba(255, 255, 255, 0.7);
+  background-blend-mode: overlay;
+}

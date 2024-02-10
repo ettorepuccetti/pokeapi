@@ -6,16 +6,14 @@ import {
   MultiPokemonApiResponse,
   Pokemon,
   PokemonsListPage,
+  TypeApiResponse,
 } from './data/datamodel';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MultiPokemonService {
-  pokemons: Observable<Pokemon[]> | null = null;
-  nextUrl: Observable<string> | null = null;
-  prevUrl: Observable<string> | null = null;
-  indexCounter: Observable<number> | null = null;
+  pokemonsByType: Observable<Pokemon[]> | null = null;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -36,6 +34,41 @@ export class MultiPokemonService {
             (parseInt(data.results[0].url.split('/').at(-2)!) - 1) /
               ITEM_PER_PAGE +
             1,
+        };
+      }),
+    );
+  }
+
+  offset: number = 0;
+
+  resetOffset() {
+    this.offset = 0;
+  }
+
+  incrementOffset() {
+    this.offset++;
+  }
+
+  decrementOffset() {
+    this.offset--;
+  }
+
+  getPokemonsByType(url: string): Observable<PokemonsListPage> {
+    return this.httpClient.get<TypeApiResponse>(url).pipe(
+      map((data) => {
+        return data.pokemon.filter((p) => p.slot === 1).map((p) => p.pokemon);
+      }),
+      map((pokemons) => {
+        return {
+          count: pokemons.length,
+          pokemons: pokemons.slice(
+            this.offset * ITEM_PER_PAGE,
+            (this.offset + 1) * ITEM_PER_PAGE,
+          ),
+          nextUrl:
+            pokemons.length > (this.offset + 1) * ITEM_PER_PAGE ? url : null,
+          prevUrl: this.offset > 0 ? url : null,
+          indexCounter: this.offset + 1,
         };
       }),
     );
